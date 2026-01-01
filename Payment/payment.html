@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroBooker</title>
+    <link rel="stylesheet" href="payment-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>💳 Payment</h1>
+            <a href="../passenger/passanger.html" class="back-btn">← Back to Passenger Details</a>
+        </header>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="step completed">
+                <div class="step-number">1</div>
+                <div class="step-label">Search Flight</div>
+            </div>
+            <div class="step completed">
+                <div class="step-number">2</div>
+                <div class="step-label">Select Seat</div>
+            </div>
+            <div class="step completed">
+                <div class="step-number">3</div>
+                <div class="step-label">Passenger Info</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">4</div>
+                <div class="step-label">Payment</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Payment Form -->
+            <div class="payment-container">
+                <h2>Complete Your Payment</h2>
+                <p class="payment-subtitle">Choose your preferred payment method</p>
+
+                <!-- Payment Method Selection -->
+                <div class="payment-methods">
+                    <h3>Select Payment Method</h3>
+                    <div class="method-options">
+                        <label class="method-option">
+                            <input type="radio" name="paymentMethod" value="1" checked>
+                            <div class="method-card">
+                                <div class="method-icon">💳</div>
+                                <div class="method-info">
+                                    <h4>Credit Card</h4>
+                                    <p>Visa, Mastercard, Amex</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="method-option">
+                            <input type="radio" name="paymentMethod" value="2">
+                            <div class="method-card">
+                                <div class="method-icon">💰</div>
+                                <div class="method-info">
+                                    <h4>Debit Card</h4>
+                                    <p>All major debit cards</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        <label class="method-option">
+                            <input type="radio" name="paymentMethod" value="3">
+                            <div class="method-card">
+                                <div class="method-icon">🅿️</div>
+                                <div class="method-info">
+                                    <h4>PayPal</h4>
+                                    <p>Fast & secure payment</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Card Details Form -->
+                <form id="paymentForm">
+                    <div class="form-section">
+                        <h3>Card Details</h3>
+                        
+                        <div class="form-group">
+                            <label for="cardName">Cardholder Name <span class="required">*</span></label>
+                            <input type="text" id="cardName" name="cardName" required placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number <span class="required">*</span></label>
+                            <input type="text" id="cardNumber" name="cardNumber" required 
+                                   placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date <span class="required">*</span></label>
+                                <input type="text" id="expiryDate" name="expiryDate" required 
+                                       placeholder="MM/YY" maxlength="5">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="cvv">CVV <span class="required">*</span></label>
+                                <input type="text" id="cvv" name="cvv" required 
+                                       placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Address -->
+                    <div class="form-section">
+                        <h3>Billing Address</h3>
+                        
+                        <div class="form-group">
+                            <label for="address">Street Address <span class="required">*</span></label>
+                            <input type="text" id="address" name="address" required placeholder="123 Main Street">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City <span class="required">*</span></label>
+                                <input type="text" id="city" name="city" required placeholder="New York">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="zipCode">ZIP Code <span class="required">*</span></label>
+                                <input type="text" id="zipCode" name="zipCode" required placeholder="12345">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">Country <span class="required">*</span></label>
+                            <input type="text" id="country" name="country" required placeholder="United States">
+                        </div>
+                    </div>
+
+                    <!-- Terms -->
+                    <div class="form-section">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">
+                                I agree to the booking terms and conditions <span class="required">*</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="window.history.back()">
+                            Back
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            Complete Booking
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Booking Summary Sidebar -->
+            <div class="booking-summary">
+                <h3>Booking Summary</h3>
+                
+                <div class="summary-card">
+                    <h4>Flight Details</h4>
+                    <div class="summary-item">
+                        <span class="label">Flight:</span>
+                        <span class="value" id="summaryFlight">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Route:</span>
+                        <span class="value" id="summaryRoute">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Date:</span>
+                        <span class="value" id="summaryDate">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Time:</span>
+                        <span class="value" id="summaryTime">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Class:</span>
+                        <span class="value" id="summaryClass">---</span>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Seat Information</h4>
+                    <div class="summary-item">
+                        <span class="label">Seat Number:</span>
+                        <span class="value" id="seatNumber">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Seat Class:</span>
+                        <span class="value" id="seatClass">---</span>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Passenger Details</h4>
+                    <div class="summary-item">
+                        <span class="label">Name:</span>
+                        <span class="value" id="passengerName">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Email:</span>
+                        <span class="value" id="passengerEmail">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Passport:</span>
+                        <span class="value" id="passengerPassport">---</span>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Price Breakdown</h4>
+                    <div class="price-item">
+                        <span>Base Fare:</span>
+                        <span id="baseFare">$---</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Taxes & Fees:</span>
+                        <span id="taxes">$25.00</span>
+                    </div>
+                    <div class="price-divider"></div>
+                    <div class="price-item total">
+                        <span>Total Amount:</span>
+                        <span id="totalPrice">$---</span>
+                    </div>
+                </div>
+
+                <div class="security-badge">
+                    <div class="badge-icon">🔒</div>
+                    <div class="badge-text">
+                        <strong>Secure Payment</strong>
+                        <p>Your payment information is encrypted</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        let passengerData = null;
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        // ============================================
+        // LOAD BOOKING DATA - FIXED TO USE LOCALSTORAGE
+        // ============================================
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 Payment page loaded');
+            console.log('🔍 Checking for passenger data...');
+            
+            const passengerDataStr = localStorage.getItem('passengerData');
+            
+            console.log('📦 Passenger data from localStorage:', passengerDataStr ? 'EXISTS' : 'NULL');
+            
+            if (!passengerDataStr) {
+                console.error('❌ No passenger data found');
+                alert('No booking data found. Redirecting to booking page...');
+                window.location.href = '../booking/booking.html';
+                return;
+            }
+
+            try {
+                passengerData = JSON.parse(passengerDataStr);
+                console.log('✅ Passenger data loaded:', passengerData);
+                
+                // Verify required data exists
+                if (!passengerData.booking || !passengerData.booking.flight || !passengerData.booking.seat) {
+                    console.error('❌ Incomplete passenger data');
+                    alert('Incomplete booking data. Please start over.');
+                    window.location.href = '../booking/booking.html';
+                    return;
+                }
+                
+                if (!passengerData.passengerId) {
+                    console.error('❌ Missing passenger ID');
+                    alert('Passenger information incomplete. Please go back and resubmit.');
+                    window.location.href = '../passenger/passanger.html';
+                    return;
+                }
+                
+                displayBookingSummary();
+            } catch (error) {
+                console.error('❌ Error parsing passenger data:', error);
+                alert('Error loading booking data. Please start over.');
+                window.location.href = '../booking/booking.html';
+            }
+        });
+
+        // ============================================
+        // DISPLAY BOOKING SUMMARY
+        // ============================================
+        function displayBookingSummary() {
+            const flight = passengerData.booking.flight;
+            const seat = passengerData.booking.seat;
+
+            // Flight details
+            document.getElementById('summaryFlight').textContent = flight.flightNumber;
+            document.getElementById('summaryRoute').textContent = `${flight.originCode} → ${flight.destCode}`;
+            
+            const flightDate = new Date(flight.flightDate);
+            document.getElementById('summaryDate').textContent = flightDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            
+            const departureTime = new Date(flight.departureTime);
+            document.getElementById('summaryTime').textContent = departureTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            document.getElementById('summaryClass').textContent = flight.ticketType;
+
+            // Seat details
+            document.getElementById('seatNumber').textContent = seat.seatNumber;
+            document.getElementById('seatClass').textContent = `${seat.seatClass} Class`;
+
+            // Passenger details
+            document.getElementById('passengerName').textContent = `${passengerData.firstName} ${passengerData.lastName}`;
+            document.getElementById('passengerEmail').textContent = passengerData.email;
+            document.getElementById('passengerPassport').textContent = passengerData.passportNumber;
+
+            // Price details
+            document.getElementById('baseFare').textContent = `$${passengerData.booking.baseFare.toFixed(2)}`;
+            document.getElementById('taxes').textContent = `$${passengerData.booking.taxes.toFixed(2)}`;
+            document.getElementById('totalPrice').textContent = `$${passengerData.booking.total.toFixed(2)}`;
+        }
+
+        // ============================================
+        // CARD NUMBER FORMATTING
+        // ============================================
+        document.getElementById('cardNumber').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // ============================================
+        // EXPIRY DATE FORMATTING
+        // ============================================
+        document.getElementById('expiryDate').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // ============================================
+        // CVV VALIDATION
+        // ============================================
+        document.getElementById('cvv').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        // ============================================
+        // FORM SUBMISSION - FIXED TO USE LOCALSTORAGE
+        // ============================================
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            console.log('💳 Processing payment...');
+
+            // Get payment method
+            const paymentMethodId = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            // Get form data
+            const cardData = {
+                cardName: document.getElementById('cardName').value.trim(),
+                cardNumber: document.getElementById('cardNumber').value.replace(/\s/g, ''),
+                expiryDate: document.getElementById('expiryDate').value,
+                cvv: document.getElementById('cvv').value,
+                address: document.getElementById('address').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                zipCode: document.getElementById('zipCode').value.trim(),
+                country: document.getElementById('country').value.trim()
+            };
+
+            // Validate card number
+            if (cardData.cardNumber.length < 13 || cardData.cardNumber.length > 19) {
+                alert('Please enter a valid card number');
+                return;
+            }
+
+            // Validate expiry date
+            const [month, year] = cardData.expiryDate.split('/');
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear() % 100;
+            const currentMonth = currentDate.getMonth() + 1;
+
+            if (!month || !year || parseInt(month) > 12 || parseInt(month) < 1) {
+                alert('Please enter a valid expiry date (MM/YY)');
+                return;
+            }
+
+            if (parseInt(year) < currentYear || (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
+                alert('Card has expired. Please use a valid card.');
+                return;
+            }
+
+            console.log('✅ Payment form validated');
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('.btn-primary');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing Payment...';
+
+            try {
+                // Debug: Log all passenger data
+                console.log('🔍 Full passenger data:', passengerData);
+                console.log('🔍 Flight data:', passengerData.booking.flight);
+                console.log('🔍 Seat data:', passengerData.booking.seat);
+                
+                // Create booking payload
+                const bookingPayload = {
+                    passengerId: passengerData.passengerId,
+                    flightId: passengerData.booking.flight.flightId,
+                    seatId: passengerData.booking.seat.seatId,
+                    ticketTypeId: passengerData.booking.flight.ticketTypeId,
+                    paymentMethodId: parseInt(paymentMethodId)
+                };
+
+                console.log('📤 Sending booking request:', bookingPayload);
+                
+                // Validate payload
+                if (!bookingPayload.passengerId) {
+                    throw new Error('Missing passenger ID. Please go back and resubmit passenger details.');
+                }
+                if (!bookingPayload.flightId) {
+                    throw new Error('Missing flight ID. Please select your flight again.');
+                }
+                if (!bookingPayload.seatId) {
+                    throw new Error('Missing seat ID. Please select your seat again.');
+                }
+                if (!bookingPayload.ticketTypeId) {
+                    throw new Error('Missing ticket type. Please select your flight again.');
+                }
+
+                const response = await fetch(`${API_BASE_URL}/bookings/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bookingPayload)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('✅ Booking created successfully:', result);
+                    
+                    // Store booking confirmation in localStorage
+                    localStorage.setItem('bookingConfirmation', JSON.stringify(result.booking));
+                    
+                    console.log('💾 Booking confirmation saved to localStorage');
+
+                    // Show success message
+                    alert('🎉 Payment successful!\n\nYour booking has been confirmed.\nBooking ID: ' + result.booking.BookingID);
+                    
+                    console.log('🔀 Redirecting to ticket page...');
+                    
+                    // Redirect to ticket page
+                    window.location.href = '../ticket/ticket.html';
+                } else {
+                    throw new Error(result.message || 'Failed to create booking');
+                }
+            } catch (error) {
+                console.error('❌ Error processing payment:', error);
+                alert('Error processing payment. Please try again.\n\n' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+    </script>
+</body>
+</html>

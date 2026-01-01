@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - AeroBooker</title>
+    <link rel="stylesheet" href="user-style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span> ✈️ AeroBooker</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../home/home.html">Home</a></li>
+                <li><a href="../booking/booking.html">Book Flight</a></li>
+                <li><a href="../ticket/ticket.html">Ticket</a></li>
+                <li><a href="../Contact Us/contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#" class="user-info">
+                    <div class="avatar" id="navAvatar">JD</div>
+                    <span id="navUserName">John Doe</span>
+                </a>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar" id="profileAvatar">JD</div>
+                    <button class="change-photo-btn">Change Photo</button>
+                </div>
+                <div class="profile-info">
+                    <h1 id="profileName">John Doe</h1>
+                    <p id="profileEmail">john.doe@example.com</p>
+                    <span class="member-since">Member since: <span id="memberDate">December 2024</span></span>
+                </div>
+            </div>
+
+            <!-- Profile Content Grid -->
+            <div class="profile-grid">
+                <!-- Personal Information -->
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h2>Personal Information</h2>
+                        <button class="edit-btn" id="editPersonalBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            Edit
+                        </button>
+                    </div>
+                    <form id="personalInfoForm">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="fullName" value="John Doe" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="email" value="john.doe@example.com" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="phone" value="" placeholder="Enter phone number" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="dob" value="" disabled>
+                        </div>
+                        <div class="form-actions hidden" id="personalActions">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-secondary" id="cancelPersonalBtn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Account Settings -->
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h2>Account Settings</h2>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>Email Notifications</h3>
+                                <p>Receive email updates about your bookings</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>SMS Notifications</h3>
+                                <p>Get text messages for flight updates</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>Two-Factor Authentication</h3>
+                                <p>Add extra security to your account</p>
+                            </div>
+                            <label class="toggle">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h2>Change Password</h2>
+                    </div>
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" id="currentPassword" placeholder="Enter current password">
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" id="newPassword" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                    </form>
+                </div>
+
+                <!-- Account Statistics -->
+                <div class="profile-card">
+                    <div class="card-header">
+                        <h2>Account Statistics</h2>
+                    </div>
+                    <div class="stats-list">
+                        <div class="stat-item">
+                            <div class="stat-icon">✈️</div>
+                            <div class="stat-details">
+                                <h3>Total Flights</h3>
+                                <p class="stat-value" id="totalFlights">-</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">📋</div>
+                            <div class="stat-details">
+                                <h3>Active Bookings</h3>
+                                <p class="stat-value" id="activeBookings">-</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-details">
+                                <h3>Total Spent</h3>
+                                <p class="stat-value" id="totalSpent">-</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">⭐</div>
+                            <div class="stat-details">
+                                <h3>Loyalty Points</h3>
+                                <p class="stat-value" id="loyaltyPoints">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        let user = JSON.parse(localStorage.getItem('user'));
+        
+        // Check if user is logged in
+        if (!user || !user.id) {
+            window.location.href = '../login/login.html';
+        }
+
+        // Function to update UI with user data
+        function updateUI(userData) {
+            document.getElementById('profileName').textContent = userData.name;
+            document.getElementById('profileEmail').textContent = userData.email;
+            document.getElementById('navUserName').textContent = userData.name;
+            document.getElementById('fullName').value = userData.name;
+            document.getElementById('email').value = userData.email;
+            document.getElementById('phone').value = userData.phone || '';
+            
+            // Format date properly for input field (YYYY-MM-DD)
+            if (userData.date_of_birth) {
+                const date = new Date(userData.date_of_birth);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                document.getElementById('dob').value = `${year}-${month}-${day}`;
+            }
+
+            // Format and display member since date
+            if (userData.created_at) {
+                const createdDate = new Date(userData.created_at);
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = createdDate.toLocaleDateString('en-US', options);
+                document.getElementById('memberDate').textContent = formattedDate;
+            }
+            
+            // Set avatar initials
+            const initials = userData.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('profileAvatar').textContent = initials;
+            document.getElementById('navAvatar').textContent = initials;
+        }
+
+        // Fetch fresh user data from database
+        async function loadUserProfile() {
+            try {
+                const response = await fetch(`${API_URL}/profile/${user.id}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Update localStorage with fresh data
+                    const updatedUser = {
+                        ...user,
+                        ...data.user
+                    };
+                    localStorage.setItem('user', JSON.stringify(updatedUser));
+                    user = updatedUser;
+                    updateUI(updatedUser);
+                } else {
+                    console.error('Error loading profile:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+            }
+        }
+
+        // Load user statistics
+        async function loadUserStats() {
+            try {
+                const response = await fetch(`${API_URL}/profile/stats/${user.id}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('totalFlights').textContent = data.stats.total_flights;
+                    document.getElementById('activeBookings').textContent = data.stats.active_bookings;
+                    document.getElementById('totalSpent').textContent = `$${data.stats.total_spent.toFixed(2)}`;
+                    document.getElementById('loyaltyPoints').textContent = data.stats.loyalty_points;
+                }
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+                // Set default values on error
+                document.getElementById('totalFlights').textContent = '0';
+                document.getElementById('activeBookings').textContent = '0';
+                document.getElementById('totalSpent').textContent = '$0.00';
+                document.getElementById('loyaltyPoints').textContent = '0';
+            }
+        }
+
+        // Load data on page load
+        loadUserProfile();
+        loadUserStats();
+
+        // Edit Personal Information
+        const editPersonalBtn = document.getElementById('editPersonalBtn');
+        const personalForm = document.getElementById('personalInfoForm');
+        const personalInputs = personalForm.querySelectorAll('input');
+        const personalActions = document.getElementById('personalActions');
+        const cancelPersonalBtn = document.getElementById('cancelPersonalBtn');
+        let originalValues = {};
+
+        editPersonalBtn.addEventListener('click', () => {
+            // Store original values
+            personalInputs.forEach(input => {
+                originalValues[input.id] = input.value;
+            });
+
+            personalInputs.forEach(input => {
+                if (input.id !== 'email') {
+                    input.disabled = false;
+                }
+            });
+            personalActions.classList.remove('hidden');
+            editPersonalBtn.style.display = 'none';
+        });
+
+        cancelPersonalBtn.addEventListener('click', () => {
+            // Restore original values
+            personalInputs.forEach(input => {
+                input.value = originalValues[input.id];
+                input.disabled = true;
+            });
+            personalActions.classList.add('hidden');
+            editPersonalBtn.style.display = 'flex';
+        });
+
+        personalForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = personalForm.querySelector('.btn-primary');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Saving...';
+
+            const updatedData = {
+                userId: user.id,
+                name: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                dob: document.getElementById('dob').value
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/profile/update`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updatedData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Update localStorage with new data
+                    const updatedUser = {
+                        ...user,
+                        name: data.user.name,
+                        phone: data.user.phone,
+                        date_of_birth: data.user.date_of_birth
+                    };
+                    localStorage.setItem('user', JSON.stringify(updatedUser));
+                    user = updatedUser;
+
+                    // Update UI
+                    updateUI(updatedUser);
+
+                    // Success message
+                    alert('Profile updated successfully!');
+                    
+                    // Disable inputs and hide actions
+                    personalInputs.forEach(input => input.disabled = true);
+                    personalActions.classList.add('hidden');
+                    editPersonalBtn.style.display = 'flex';
+                } else {
+                    alert(data.message || 'Failed to update profile');
+                }
+            } catch (error) {
+                console.error('Update error:', error);
+                alert('Connection error. Please make sure your backend server is running.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Save Changes';
+            }
+        });
+
+        // Change Password Form
+        const passwordForm = document.getElementById('passwordForm');
+        passwordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const submitBtn = passwordForm.querySelector('.btn-primary');
+
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Updating...';
+
+            try {
+                const response = await fetch(`${API_URL}/profile/change-password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        userId: user.id,
+                        currentPassword: currentPassword,
+                        newPassword: newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Password changed successfully!');
+                    passwordForm.reset();
+                } else {
+                    alert(data.message || 'Failed to change password');
+                }
+            } catch (error) {
+                console.error('Password change error:', error);
+                alert('Connection error. Please make sure your backend server is running.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Update Password';
+            }
+        });
+
+        // Change Photo Button
+        document.querySelector('.change-photo-btn').addEventListener('click', () => {
+            alert('Photo upload feature will be implemented in future updates');
+        });
+
+        // Logout functionality
+        document.querySelector('.logout-btn').addEventListener('click', () => {
+            if(confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                window.location.href = '../login/login.html';
+            }
+        });
+    </script>
+</body>
+</html>

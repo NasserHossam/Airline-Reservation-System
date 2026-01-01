@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroBooker - Your Ticket</title>
+    <link rel="stylesheet" href="ticket-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header with User Info -->
+        <header class="header">
+            <div>
+                <h1>✈️ Booking Confirmed</h1>
+                <p class="user-greeting" id="userGreeting">Welcome back!</p>
+            </div>
+            <a href="../home/home.html" class="back-btn">← Back to Home</a>
+        </header>
+
+        <!-- Success Message -->
+        <div class="success-message">
+            <div class="success-icon">✓</div>
+            <h2>Payment Successful!</h2>
+            <p>Your flight has been booked successfully, <span id="successUserName">User</span>! Please save your boarding pass.</p>
+        </div>
+
+        <!-- Boarding Pass -->
+        <div class="boarding-pass-container">
+            <div class="boarding-pass">
+                <!-- Left Section -->
+                <div class="pass-left">
+                    <div class="pass-header">
+                        <div class="airline-logo">✈️</div>
+                        <div class="pass-title">BOARDING PASS</div>
+                    </div>
+
+                    <div class="passenger-info">
+                        <div class="info-row">
+                            <div class="info-label">PASSENGER NAME</div>
+                            <div class="info-value passenger-name" id="passengerName">JOHN DOE</div>
+                        </div>
+                    </div>
+
+                    <div class="flight-route">
+                        <div class="route-from">
+                            <div class="airport-code" id="fromCode">JFK</div>
+                            <div class="airport-city" id="fromCity">NEW YORK</div>
+                        </div>
+                        
+                        <div class="route-arrow">
+                            <div class="plane-icon">✈</div>
+                            <div class="arrow-line"></div>
+                        </div>
+                        
+                        <div class="route-to">
+                            <div class="airport-code" id="toCode">LHR</div>
+                            <div class="airport-city" id="toCity">LONDON</div>
+                        </div>
+                    </div>
+
+                    <div class="flight-details-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">DATE</div>
+                            <div class="detail-value" id="flightDate">JUL 07, 2025</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">BOARDING TIME</div>
+                            <div class="detail-value" id="boardingTime">08:00 AM</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">FLIGHT</div>
+                            <div class="detail-value" id="flightNumber">A 0127</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">GATE</div>
+                            <div class="detail-value" id="gate">21F</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">SEAT</div>
+                            <div class="detail-value" id="seat">2A</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">CLASS</div>
+                            <div class="detail-value" id="class">BUSINESS</div>
+                        </div>
+                    </div>
+
+                    <div class="booking-reference">
+                        <div class="detail-label">BOOKING REFERENCE</div>
+                        <div class="reference-code" id="bookingRef">ABC123XYZ</div>
+                    </div>
+
+                    <div class="barcode">
+                        <svg viewBox="0 0 200 60" class="barcode-svg">
+                            <rect x="2" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="8" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="13" y="0" width="4" height="60" fill="#000"/>
+                            <rect x="20" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="25" y="0" width="5" height="60" fill="#000"/>
+                            <rect x="33" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="38" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="44" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="49" y="0" width="4" height="60" fill="#000"/>
+                            <rect x="56" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="62" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="67" y="0" width="5" height="60" fill="#000"/>
+                            <rect x="75" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="80" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="86" y="0" width="4" height="60" fill="#000"/>
+                            <rect x="93" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="98" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="104" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="109" y="0" width="5" height="60" fill="#000"/>
+                            <rect x="117" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="122" y="0" width="4" height="60" fill="#000"/>
+                            <rect x="129" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="135" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="140" y="0" width="5" height="60" fill="#000"/>
+                            <rect x="148" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="153" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="159" y="0" width="4" height="60" fill="#000"/>
+                            <rect x="166" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="171" y="0" width="5" height="60" fill="#000"/>
+                            <rect x="179" y="0" width="3" height="60" fill="#000"/>
+                            <rect x="185" y="0" width="2" height="60" fill="#000"/>
+                            <rect x="190" y="0" width="4" height="60" fill="#000"/>
+                            <rect x="197" y="0" width="2" height="60" fill="#000"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Perforation -->
+                <div class="perforation">
+                    <div class="circle top"></div>
+                    <div class="dashed-line"></div>
+                    <div class="circle bottom"></div>
+                </div>
+
+                <!-- Right Section (Stub) -->
+                <div class="pass-right">
+                    <div class="stub-header">
+                        <div class="stub-title">BOARDING PASS</div>
+                    </div>
+
+                    <div class="stub-route">
+                        <div class="stub-airport">
+                            <div class="stub-code" id="stubFromCode">JFK</div>
+                            <div class="stub-arrow">→</div>
+                            <div class="stub-code" id="stubToCode">LHR</div>
+                        </div>
+                        <div class="stub-cities">
+                            <span id="stubFromCity">NEW YORK</span> → <span id="stubToCity">LONDON</span>
+                        </div>
+                    </div>
+
+                    <div class="stub-details">
+                        <div class="stub-item">
+                            <div class="stub-label">DATE</div>
+                            <div class="stub-value" id="stubDate">JUL 07</div>
+                        </div>
+                        <div class="stub-item">
+                            <div class="stub-label">TIME</div>
+                            <div class="stub-value" id="stubTime">08:00</div>
+                        </div>
+                        <div class="stub-item">
+                            <div class="stub-label">GATE</div>
+                            <div class="stub-value" id="stubGate">21F</div>
+                        </div>
+                        <div class="stub-item">
+                            <div class="stub-label">SEAT</div>
+                            <div class="stub-value" id="stubSeat">2A</div>
+                        </div>
+                    </div>
+
+                    <div class="stub-barcode">
+                        <svg viewBox="0 0 80 40" class="stub-barcode-svg">
+                            <rect x="2" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="6" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="11" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="15" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="21" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="25" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="30" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="34" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="40" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="44" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="49" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="53" y="0" width="4" height="40" fill="#000"/>
+                            <rect x="59" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="63" y="0" width="3" height="40" fill="#000"/>
+                            <rect x="68" y="0" width="2" height="40" fill="#000"/>
+                            <rect x="72" y="0" width="4" height="40" fill="#000"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn-secondary" onclick="window.print()">
+                🖨️ Print Boarding Pass
+            </button>
+            <button class="btn-primary" onclick="window.location.href='../booking/booking.html'">
+                📋 Book Another Flight
+            </button>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="card-icon">ℹ️</div>
+                <h3>Important Information</h3>
+                <ul>
+                    <li>Please arrive at the airport at least 2 hours before departure</li>
+                    <li>Carry a valid government-issued ID</li>
+                    <li>Check-in closes 45 minutes before departure</li>
+                    <li>Boarding starts 30 minutes before departure</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <div class="card-icon">💼</div>
+                <h3>Baggage Allowance</h3>
+                <ul>
+                    <li><strong>Cabin:</strong> 1 piece (7 kg)</li>
+                    <li><strong>Checked:</strong> <span id="baggageAllowance">2 pieces (23 kg each)</span></li>
+                    <li>Additional baggage can be purchased at check-in</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <div class="card-icon">📞</div>
+                <h3>Contact Support</h3>
+                <ul>
+                    <li><strong>Phone:</strong> +201064613656</li>
+                    <li><strong>Email:</strong> ejust@ejust.edu.eg</li>
+                    <li><strong>WhatsApp:</strong> +201064613656</li>
+                    <li>Available 24/7 for assistance</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- User Booking History Card -->
+        <div class="user-info-card" style="margin-top: 30px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <h3>👤 Account Information</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                <div>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Account Name</p>
+                    <p style="font-weight: 600;" id="accountName">---</p>
+                </div>
+                <div>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Email</p>
+                    <p style="font-weight: 600;" id="accountEmail">---</p>
+                </div>
+                <div>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 5px;">User ID</p>
+                    <p style="font-weight: 600;" id="accountUserId">---</p>
+                </div>
+                <div>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Member Since</p>
+                    <p style="font-weight: 600;" id="memberSince">---</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        let bookingData = null;
+        let currentUser = null;
+
+        // ============================================
+        // CHECK USER AUTHENTICATION
+        // ============================================
+        function checkUserAuth() {
+            console.log('🔍 Checking user authentication...');
+            
+            const userData = localStorage.getItem('user');
+            const token = localStorage.getItem('token');
+            
+            if (!userData || !token) {
+                console.error('❌ User not authenticated');
+                alert('You are not logged in. Redirecting to login page...');
+                window.location.href = '../login/login.html';
+                return null;
+            }
+            
+            try {
+                currentUser = JSON.parse(userData);
+                console.log('✅ User authenticated:', currentUser);
+                return currentUser;
+            } catch (error) {
+                console.error('❌ Error parsing user data:', error);
+                alert('Session error. Please login again.');
+                localStorage.clear();
+                window.location.href = '../login/login.html';
+                return null;
+            }
+        }
+
+        // ============================================
+        // DISPLAY USER INFO
+        // ============================================
+        function displayUserInfo() {
+            if (!currentUser) return;
+            
+            // Display greeting
+            const firstName = currentUser.name.split(' ')[0];
+            document.getElementById('userGreeting').textContent = `Welcome back, ${firstName}!`;
+            document.getElementById('successUserName').textContent = firstName;
+            
+            // Display account information
+            document.getElementById('accountName').textContent = currentUser.name;
+            document.getElementById('accountEmail').textContent = currentUser.email;
+            document.getElementById('accountUserId').textContent = `#${currentUser.id}`;
+            
+            if (currentUser.created_at) {
+                const memberDate = new Date(currentUser.created_at);
+                document.getElementById('memberSince').textContent = memberDate.toLocaleDateString('en-US', {
+                    month: 'short',
+                    year: 'numeric'
+                });
+            } else {
+                document.getElementById('memberSince').textContent = 'Recently';
+            }
+            
+            console.log('✅ User info displayed');
+        }
+
+        // ============================================
+        // LOAD BOOKING CONFIRMATION DATA
+        // ============================================
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('🎫 Ticket page loaded');
+            
+            // First check user authentication
+            if (!checkUserAuth()) {
+                return;
+            }
+            
+            console.log('🔍 Checking for booking data...');
+
+            // Try to get booking confirmation from localStorage
+            const bookingConfirmation = localStorage.getItem('bookingConfirmation');
+            const passengerData = localStorage.getItem('passengerData');
+
+            console.log('📦 Booking confirmation from localStorage:', bookingConfirmation ? 'EXISTS' : 'NULL');
+            console.log('📦 Passenger data from localStorage:', passengerData ? 'EXISTS' : 'NULL');
+
+            if (!bookingConfirmation && !passengerData) {
+                console.error('❌ No booking data found');
+                alert('No booking data found. Redirecting to home page...');
+                window.location.href = '../home/home.html';
+                return;
+            }
+
+            try {
+                // Parse booking data
+                if (bookingConfirmation) {
+                    bookingData = JSON.parse(bookingConfirmation);
+                    console.log('✅ Booking confirmation loaded:', bookingData);
+                    
+                    // Also get passenger data for complete info
+                    if (passengerData) {
+                        const passenger = JSON.parse(passengerData);
+                        bookingData.passengerInfo = passenger;
+                        console.log('✅ Added passenger info to booking data');
+                    }
+                } else {
+                    // Fallback to passenger data if confirmation not available
+                    const passenger = JSON.parse(passengerData);
+                    bookingData = {
+                        BookingID: 'PENDING',
+                        ...passenger.booking,
+                        passengerInfo: passenger
+                    };
+                    console.log('✅ Using passenger data:', bookingData);
+                }
+
+                // Display user info
+                displayUserInfo();
+                
+                // Display boarding pass
+                displayBoardingPass();
+            } catch (error) {
+                console.error('❌ Error parsing booking data:', error);
+                alert('Error loading ticket data. Please contact support.');
+            }
+        });
+
+        // ============================================
+        // DISPLAY BOARDING PASS
+        // ============================================
+        function displayBoardingPass() {
+            console.log('🎫 Full booking data:', bookingData);
+
+            // Extract data from booking confirmation
+            let passengerName, flightNumber, fromCode, toCode, fromCity, toCity;
+            let flightDate, departureTime, gate, seatNumber, ticketClass, bookingRef;
+
+            // Check if we have the booking confirmation from the API
+            if (bookingData.Fname && bookingData.Lname) {
+                // IMPORTANT: Use passenger info from form, NOT database passenger
+                // The database might have old "HOSS HOSS" data from previous bookings
+                if (bookingData.passengerInfo && bookingData.passengerInfo.firstName && bookingData.passengerInfo.lastName) {
+                    // Use the passenger data from the form submission (this is YOUR actual name)
+                    passengerName = `${bookingData.passengerInfo.firstName} ${bookingData.passengerInfo.lastName}`.toUpperCase();
+                    console.log('✅ Using passenger form data for name:', passengerName);
+                } else {
+                    // Fallback to API response (but this might be old data)
+                    passengerName = `${bookingData.Fname} ${bookingData.Lname}`.toUpperCase();
+                    console.warn('⚠️ Using API response name (might be old data):', passengerName);
+                }
+                
+                flightNumber = bookingData.Flight_Number || 'MS100';
+                seatNumber = bookingData.Seat_Number || '2A';
+                ticketClass = bookingData.Type_Name || 'Economy';
+                bookingRef = `BK${bookingData.BookingID.toString().padStart(6, '0')}`;
+                
+                console.log('📋 Using API response data with passenger form override');
+                
+                // For route info, get from passenger info
+                if (bookingData.passengerInfo && bookingData.passengerInfo.booking) {
+                    const flight = bookingData.passengerInfo.booking.flight;
+                    
+                    fromCode = flight.originCode || 'JFK';
+                    toCode = flight.destCode || 'LHR';
+                    fromCity = flight.originCity || 'NEW YORK';
+                    toCity = flight.destCity || 'LONDON';
+                    flightDate = new Date(flight.flightDate);
+                    departureTime = new Date(flight.departureTime);
+                    gate = flight.gateNumber || 'A12';
+                } else {
+                    console.warn('⚠️ Using fallback route values');
+                    fromCode = 'JFK';
+                    toCode = 'LHR';
+                    fromCity = 'NEW YORK';
+                    toCity = 'LONDON';
+                    flightDate = new Date();
+                    departureTime = new Date();
+                    gate = 'A12';
+                }
+            } else if (bookingData.booking || bookingData.flight) {
+                // Data from passenger data structure
+                console.log('📋 Using passenger data structure');
+                
+                const passenger = bookingData.passengerInfo || bookingData;
+                const flight = bookingData.booking ? bookingData.booking.flight : bookingData.flight;
+                const seat = bookingData.booking ? bookingData.booking.seat : bookingData.seat;
+
+                passengerName = `${passenger.firstName} ${passenger.lastName}`.toUpperCase();
+                flightNumber = flight.flightNumber || 'MS100';
+                fromCode = flight.originCode || 'JFK';
+                toCode = flight.destCode || 'LHR';
+                fromCity = flight.originCity || 'NEW YORK';
+                toCity = flight.destCity || 'LONDON';
+                flightDate = new Date(flight.flightDate);
+                departureTime = new Date(flight.departureTime);
+                gate = flight.gateNumber || 'A12';
+                seatNumber = seat.seatNumber || '2A';
+                ticketClass = seat.seatClass || flight.ticketType || 'Economy';
+                bookingRef = bookingData.BookingID !== 'PENDING' ? `BK${bookingData.BookingID.toString().padStart(6, '0')}` : 'PENDING';
+            } else {
+                console.error('❌ Unknown booking data structure');
+                console.log('Available data:', bookingData);
+                
+                passengerName = currentUser ? currentUser.name.toUpperCase() : 'PASSENGER NAME';
+                flightNumber = 'MS100';
+                fromCode = 'JFK';
+                toCode = 'LHR';
+                fromCity = 'NEW YORK';
+                toCity = 'LONDON';
+                flightDate = new Date();
+                departureTime = new Date();
+                gate = 'A12';
+                seatNumber = '2A';
+                ticketClass = 'Economy';
+                bookingRef = 'PENDING';
+            }
+
+            console.log('📝 Displaying boarding pass with data:', {
+                passengerName, flightNumber, fromCode, toCode, seatNumber, ticketClass, bookingRef
+            });
+
+            // Display Passenger Name
+            document.getElementById('passengerName').textContent = passengerName;
+
+            // Display Flight Route
+            document.getElementById('fromCode').textContent = fromCode;
+            document.getElementById('toCode').textContent = toCode;
+            document.getElementById('fromCity').textContent = fromCity.toUpperCase();
+            document.getElementById('toCity').textContent = toCity.toUpperCase();
+
+            // Stub section
+            document.getElementById('stubFromCode').textContent = fromCode;
+            document.getElementById('stubToCode').textContent = toCode;
+            document.getElementById('stubFromCity').textContent = fromCity.toUpperCase();
+            document.getElementById('stubToCity').textContent = toCity.toUpperCase();
+
+            // Flight Date
+            const dateStr = flightDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric'
+            }).toUpperCase();
+            
+            const shortDateStr = flightDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: '2-digit'
+            }).toUpperCase();
+
+            document.getElementById('flightDate').textContent = dateStr;
+            document.getElementById('stubDate').textContent = shortDateStr;
+
+            // Boarding Time (1 hour before departure)
+            const boardingTime = new Date(departureTime.getTime() - 60 * 60 * 1000);
+            
+            const timeStr = boardingTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            const shortTimeStr = boardingTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+
+            document.getElementById('boardingTime').textContent = timeStr;
+            document.getElementById('stubTime').textContent = shortTimeStr;
+
+            // Flight Number
+            const flightNum = flightNumber.replace(/([A-Z]+)(\d+)/, '$1 $2');
+            document.getElementById('flightNumber').textContent = flightNum;
+
+            // Gate
+            document.getElementById('gate').textContent = gate;
+            document.getElementById('stubGate').textContent = gate;
+
+            // Seat
+            document.getElementById('seat').textContent = seatNumber;
+            document.getElementById('stubSeat').textContent = seatNumber;
+
+            // Class
+            const className = ticketClass.toUpperCase();
+            document.getElementById('class').textContent = className;
+
+            // Booking Reference
+            document.getElementById('bookingRef').textContent = bookingRef;
+
+            // Baggage Allowance based on class
+            let baggage = '1 piece (23 kg)';
+            if (className.includes('BUSINESS') || className.includes('FIRST')) {
+                baggage = '2 pieces (32 kg each)';
+            } else if (className.includes('PREMIUM')) {
+                baggage = '2 pieces (23 kg each)';
+            }
+            document.getElementById('baggageAllowance').textContent = baggage;
+
+            console.log('✅ Boarding pass displayed successfully');
+        }
+
+        // ============================================
+        // PRINT STYLES
+        // ============================================
+        window.onbeforeprint = () => {
+            document.querySelector('.header').style.display = 'none';
+            document.querySelector('.action-buttons').style.display = 'none';
+            document.querySelector('.info-cards').style.display = 'none';
+            document.querySelector('.success-message').style.display = 'none';
+            document.querySelector('.user-info-card').style.display = 'none';
+        };
+
+        window.onafterprint = () => {
+            document.querySelector('.header').style.display = 'flex';
+            document.querySelector('.action-buttons').style.display = 'flex';
+            document.querySelector('.info-cards').style.display = 'grid';
+            document.querySelector('.success-message').style.display = 'block';
+            document.querySelector('.user-info-card').style.display = 'block';
+        };
+    </script>
+</body>
+</html>

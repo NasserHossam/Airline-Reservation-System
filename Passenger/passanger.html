@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroBooker</title>
+    <link rel="stylesheet" href="passenger-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>✈️ Passenger Details</h1>
+            <a href="../my booking/seat-selection.html" class="back-btn">← Back to Seat Selection</a>
+        </header>
+
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="step completed">
+                <div class="step-number">1</div>
+                <div class="step-label">Search Flight</div>
+            </div>
+            <div class="step completed">
+                <div class="step-number">2</div>
+                <div class="step-label">Select Seat</div>
+            </div>
+            <div class="step active">
+                <div class="step-number">3</div>
+                <div class="step-label">Passenger Info</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-label">Payment</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Passenger Form -->
+            <div class="form-container">
+                <h2>Enter Passenger Information</h2>
+                <p class="form-subtitle">Please fill in the details for the passenger traveling</p>
+
+                <form id="passengerForm">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name <span class="required">*</span></label>
+                                <input type="text" id="firstName" name="firstName" required placeholder="Enter first name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="lastName">Last Name <span class="required">*</span></label>
+                                <input type="text" id="lastName" name="lastName" required placeholder="Enter last name">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="gender">Gender <span class="required">*</span></label>
+                                <select id="gender" name="gender" required>
+                                    <option value="">Select gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                    <option value="U">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nationality">Nationality <span class="required">*</span></label>
+                                <input type="text" id="nationality" name="nationality" required placeholder="Enter nationality">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="form-section">
+                        <h3>Contact Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required placeholder="example@email.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Travel Document -->
+                    <div class="form-section">
+                        <h3>Travel Document</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="passportNumber">Passport Number <span class="required">*</span></label>
+                                <input type="text" id="passportNumber" name="passportNumber" required placeholder="Enter passport number">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="passportExpiry">Passport Expiry Date</label>
+                                <input type="date" id="passportExpiry" name="passportExpiry" placeholder="Optional">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="form-section">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">
+                                I agree to the <a href="#" class="link">Terms and Conditions</a> and <a href="#" class="link">Privacy Policy</a> <span class="required">*</span>
+                            </label>
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <label for="newsletter">
+                                Subscribe to newsletter for exclusive deals and updates
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="window.history.back()">
+                            Back
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            Continue to Payment
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Booking Summary Sidebar -->
+            <div class="booking-summary">
+                <h3>Booking Summary</h3>
+                
+                <div class="summary-card">
+                    <h4>Flight Details</h4>
+                    <div class="summary-item">
+                        <span class="label">Flight:</span>
+                        <span class="value" id="summaryFlight">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Route:</span>
+                        <span class="value" id="summaryRoute">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Date:</span>
+                        <span class="value" id="summaryDate">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Time:</span>
+                        <span class="value" id="summaryTime">---</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Class:</span>
+                        <span class="value" id="summaryClass">---</span>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Seat Selection</h4>
+                    <div class="seat-display">
+                        <div class="seat-icon-large">
+                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 13V11C7 9.89543 7.89543 9 9 9H15C16.1046 9 17 11V13" stroke="#9c27b0" stroke-width="2"/>
+                                <path d="M6 13H18C19.1046 13 20 13.8954 20 15V17C20 18.1046 19.1046 19 18 19H6C4.89543 19 4 18.1046 4 17V15C4 13.8954 4.89543 13 6 13Z" fill="#9c27b0"/>
+                            </svg>
+                        </div>
+                        <p class="seat-number" id="seatNumber">---</p>
+                        <p class="seat-class" id="seatClass">---</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h4>Price Breakdown</h4>
+                    <div class="price-item">
+                        <span>Base Fare:</span>
+                        <span id="baseFare">$---</span>
+                    </div>
+                    <div class="price-item">
+                        <span>Taxes & Fees:</span>
+                        <span id="taxes">$25.00</span>
+                    </div>
+                    <div class="price-divider"></div>
+                    <div class="price-item total">
+                        <span>Total Amount:</span>
+                        <span id="totalPrice">$---</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        let bookingData = null;
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        // ============================================
+        // LOAD BOOKING DATA - FIXED TO USE LOCALSTORAGE
+        // ============================================
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 Passenger details page loaded');
+            console.log('🔍 Checking for booking data...');
+            
+            // Get booking data from localStorage
+            const bookingDataStr = localStorage.getItem('bookingData');
+            
+            console.log('📦 Booking data from localStorage:', bookingDataStr ? 'EXISTS' : 'NULL');
+            
+            if (!bookingDataStr) {
+                console.error('❌ No booking data found');
+                alert('No booking data found. Redirecting to booking page...');
+                window.location.href = '../booking/booking.html';
+                return;
+            }
+
+            try {
+                bookingData = JSON.parse(bookingDataStr);
+                console.log('✅ Booking data loaded:', bookingData);
+                
+                // Verify required data exists
+                if (!bookingData.flight || !bookingData.seat) {
+                    console.error('❌ Incomplete booking data');
+                    alert('Incomplete booking data. Please start over.');
+                    window.location.href = '../booking/booking.html';
+                    return;
+                }
+                
+                displayBookingSummary();
+                autoFillUserData();
+            } catch (error) {
+                console.error('❌ Error parsing booking data:', error);
+                alert('Error loading booking data. Please start over.');
+                window.location.href = '../booking/booking.html';
+            }
+        });
+
+        // ============================================
+        // DISPLAY BOOKING SUMMARY
+        // ============================================
+        function displayBookingSummary() {
+            const flight = bookingData.flight;
+            const seat = bookingData.seat;
+
+            // Flight details
+            document.getElementById('summaryFlight').textContent = flight.flightNumber;
+            document.getElementById('summaryRoute').textContent = `${flight.originCode} → ${flight.destCode}`;
+            
+            const flightDate = new Date(flight.flightDate);
+            document.getElementById('summaryDate').textContent = flightDate.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            
+            const departureTime = new Date(flight.departureTime);
+            document.getElementById('summaryTime').textContent = departureTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            document.getElementById('summaryClass').textContent = flight.ticketType;
+
+            // Seat details
+            document.getElementById('seatNumber').textContent = `Seat ${seat.seatNumber}`;
+            document.getElementById('seatClass').textContent = `${seat.seatClass} Class`;
+
+            // Price details
+            document.getElementById('baseFare').textContent = `$${bookingData.baseFare.toFixed(2)}`;
+            document.getElementById('taxes').textContent = `$${bookingData.taxes.toFixed(2)}`;
+            document.getElementById('totalPrice').textContent = `$${bookingData.total.toFixed(2)}`;
+        }
+
+        // ============================================
+        // AUTO-FILL FROM USER DATA - FIXED TO USE LOCALSTORAGE
+        // ============================================
+        function autoFillUserData() {
+            const userData = localStorage.getItem('user');
+            
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    console.log('👤 Auto-filling user data:', user);
+                    
+                    if (user.email) {
+                        document.getElementById('email').value = user.email;
+                    }
+                    if (user.phone) {
+                        document.getElementById('phone').value = user.phone;
+                    }
+                    if (user.name) {
+                        const nameParts = user.name.split(' ');
+                        document.getElementById('firstName').value = nameParts[0] || '';
+                        document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
+                    }
+                    if (user.date_of_birth && user.date_of_birth !== 'null') {
+                        document.getElementById('dateOfBirth').value = user.date_of_birth;
+                    }
+                    
+                    console.log('✅ Auto-filled user data');
+                } catch (error) {
+                    console.log('⚠️ Could not auto-fill user data:', error);
+                }
+            } else {
+                console.log('ℹ️ No user data found for auto-fill');
+            }
+        }
+
+        // ============================================
+        // FORM VALIDATION & SUBMISSION
+        // ============================================
+        document.getElementById('passengerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            console.log('📝 Form submitted');
+            
+            // Get form data
+            const formData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                gender: document.getElementById('gender').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                nationality: document.getElementById('nationality').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim() || null,
+                passportNumber: document.getElementById('passportNumber').value.trim(),
+                passportExpiry: document.getElementById('passportExpiry').value || null,
+                terms: document.getElementById('terms').checked,
+                newsletter: document.getElementById('newsletter').checked
+            };
+
+            console.log('Form data:', formData);
+
+            // Validate dates
+            const dob = new Date(formData.dateOfBirth);
+            const today = new Date();
+            const age = today.getFullYear() - dob.getFullYear();
+            
+            if (age < 0 || age > 120) {
+                alert('Please enter a valid date of birth');
+                return;
+            }
+
+            // Validate passport expiry if provided
+            if (formData.passportExpiry) {
+                const passportExpiry = new Date(formData.passportExpiry);
+                if (passportExpiry <= today) {
+                    alert('Passport must be valid (not expired)');
+                    return;
+                }
+            }
+
+            console.log('✅ Form validated successfully');
+
+            // Show loading state
+            const submitBtn = e.target.querySelector('.btn-primary');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+
+            try {
+                console.log('🔄 Creating/checking passenger in database...');
+                
+                // Create passenger in database
+                const response = await fetch(`${API_BASE_URL}/passengers/create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fname: formData.firstName,
+                        lname: formData.lastName,
+                        email: formData.email,
+                        phone: formData.phone,
+                        dob: formData.dateOfBirth,
+                        nationality: formData.nationality,
+                        passport: formData.passportNumber,
+                        gender: formData.gender
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('✅ Passenger created/found:', result);
+                    
+                    // Store passenger data with passenger ID
+                    const passengerData = {
+                        ...formData,
+                        passengerId: result.passenger.PassengerID,
+                        booking: bookingData
+                    };
+                    
+                    localStorage.setItem('passengerData', JSON.stringify(passengerData));
+                    console.log('💾 Passenger data saved to localStorage');
+
+                    // Redirect to payment page
+                    alert('Passenger details saved successfully!\n\nProceeding to payment...');
+                    console.log('🔀 Redirecting to payment page...');
+                    window.location.href = '../payment/payment.html';
+                } else {
+                    throw new Error(result.message || 'Failed to save passenger data');
+                }
+            } catch (error) {
+                console.error('❌ Error saving passenger:', error);
+                alert('Error saving passenger details: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        // ============================================
+        // SET MAX/MIN DATES FOR FORM INPUTS
+        // ============================================
+        const today = new Date();
+        
+        // Set max date for DOB (must be at least 1 year old)
+        const maxDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+        document.getElementById('dateOfBirth').max = maxDate.toISOString().split('T')[0];
+
+        // Set min date for passport expiry (must be in future)
+        document.getElementById('passportExpiry').min = today.toISOString().split('T')[0];
+        
+        console.log('✅ Date constraints set');
+    </script>
+</body>
+</html>

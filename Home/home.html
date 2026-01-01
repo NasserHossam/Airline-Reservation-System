@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroBooker</title>
+    <link rel="stylesheet" href="home-style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span> ✈️ AeroBooker</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="../booking/booking.html">Book Flight</a></li>
+                <li><a href="../ticket/ticket.html">Ticket</a></li>
+                <li><a href="../Contact Us/contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="../profile/user.html" class="user-info">
+                    <div class="avatar" id="userAvatar">U</div>
+                    <span id="userName">Loading...</span>
+                </a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h1 id="welcomeText">Welcome Back!</h1>
+            <p>Here's what's happening with your flight management system today.</p>
+        </section>
+
+        <!-- Stats Cards -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Total Flights</h3>
+                    <p class="stat-number" id="totalFlights">Loading...</p>
+                    <span class="stat-change positive">System-wide</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <h3>Active Bookings</h3>
+                    <p class="stat-number" id="activeBookings">Loading...</p>
+                    <span class="stat-change positive">Current reservations</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Available Flights Section -->
+        <section class="flights-section">
+            <div class="section-header">
+                <h2>Available Flights</h2>
+                <button class="view-all-btn" onclick="window.location.href='../booking/booking.html'">View All Flights</button>
+            </div>
+            <div class="flights-grid" id="availableFlights">
+                <div class="loading-spinner">Loading flights...</div>
+            </div>
+        </section>
+
+        <!-- Recent Flights Section -->
+        <section class="recent-section">
+            <h2>Recent Flight Activity</h2>
+            <div class="activity-list" id="recentFlightsList">
+                <div class="loading-spinner">Loading recent flights...</div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+        
+        // Load user data from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.name) {
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('welcomeText').textContent = `Welcome Back, ${user.name.split(' ')[0]}!`;
+            
+            // Set avatar initials (fixed)
+            const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('userAvatar').textContent = initials;
+        } else {
+            window.location.href = '../login/login.html';
+        }
+
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch(`${API_URL}/dashboard/stats`);
+                const data = await response.json();
+                console.log(data)
+
+
+                document.getElementById('totalFlights').textContent = data.totalFlights;
+                document.getElementById('activeBookings').textContent = data.activeBookings;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                document.getElementById('totalFlights').textContent = 'Error';
+                document.getElementById('activeBookings').textContent = 'Error';
+            }
+        }
+
+        // Load available flights
+        async function loadAvailableFlights() {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const response = await fetch(`${API_URL}/flights/search?date=${today}`);
+                const data = await response.json();
+                console.log(data)
+
+
+                const flightsGrid = document.getElementById('availableFlights');
+                flightsGrid.innerHTML = "";
+
+                if (data.flights.length === 0) {
+                    flightsGrid.innerHTML = '<p class="no-data">No flights today.</p>';
+                    return;
+                }
+
+                const uniqueFlights = {};
+                data.flights.forEach(flight => {
+                    if (!uniqueFlights[flight.FlightID]) {
+                        uniqueFlights[flight.FlightID] = flight;
+                    }
+                });
+
+                flightsGrid.innerHTML = Object.values(uniqueFlights)
+                    .slice(0, 6)
+                    .map(flight => {
+                        const dep = new Date(flight.Departure_Time);
+                        const arr = new Date(flight.Arrival_Time);
+
+                        return `
+                            <div class="flight-card">
+                                <div class="flight-header">
+                                    <span class="flight-number">${flight.Flight_Number}</span>
+                                    <span class="flight-status ${flight.Flight_Status.toLowerCase()}">${flight.Flight_Status}</span>
+                                </div>
+                                <div class="flight-route">
+                                    <div class="airport">
+                                        <span class="city">${flight.Origin_City}</span>
+                                        <span class="code">${flight.Origin_Code}</span>
+                                    </div>
+                                    <div class="flight-arrow">→</div>
+                                    <div class="airport">
+                                        <span class="city">${flight.Destination_City}</span>
+                                        <span class="code">${flight.Destination_Code}</span>
+                                    </div>
+                                </div>
+                                <div class="flight-details">
+                                    <div class="detail">
+                                        <span class="label">Departure</span>
+                                        <span class="value">${dep.toLocaleTimeString()}</span>
+                                    </div>
+                                    <div class="detail">
+                                        <span class="label">Arrival</span>
+                                        <span class="value">${arr.toLocaleTimeString()}</span>
+                                    </div>
+                                    <div class="detail">
+                                        <span class="label">Available Seats</span>
+                                        <span class="value">${flight.Available_Seats}</span>
+                                    </div>
+                                </div>
+                                <button class="book-btn" onclick="window.location.href='../booking/booking.html'">Book Now</button>
+                            </div>
+                        `;
+                    }).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Load recent flights
+        async function loadRecentFlights() {
+            try {
+                const response = await fetch(`${API_URL}/dashboard/recent-flights`);
+                const data = await response.json();
+                console.log(data)
+
+                const list = document.getElementById('recentFlightsList');
+                list.innerHTML = data.flights.map(f => `
+                    <div class="activity-item">
+                        <div class="activity-icon">✈️</div>
+                        <div class="activity-details">
+                            <h4>${f.Flight_Number} | ${f.Origin_City} → ${f.Destination_City}</h4>
+                            <p>Status: ${f.Flight_Status}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } catch {
+                document.getElementById('recentFlightsList').innerHTML = '<p>Error loading flights</p>';
+            }
+        }
+
+        loadDashboardStats();
+        loadAvailableFlights();
+        loadRecentFlights();
+
+        // Logout
+        document.querySelector('.logout-btn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '../login/login.html';
+            }
+        });
+    </script>
+</body>
+</html>

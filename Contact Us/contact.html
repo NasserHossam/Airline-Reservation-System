@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroBooker</title>
+    <link rel="stylesheet" href="contact-style.css">
+</head>
+
+<body>
+
+    <!-- Navbar (COPIED STYLE FROM HOME PAGE) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span> ✈️ AeroBooker</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="../home/home.html">Home</a></li>
+                <li><a href="../booking/booking.html">Book Flight</a></li>
+                <li><a href="#">My Bookings</a></li>
+                <li><a class="active" href="contact.html">Contact Us</a></li>
+            </ul>
+
+            <div class="nav-right">
+                <a href="../profile/user.html" class="user-info">
+                    <div class="avatar">U</div>
+                    <span id="userName">User</span>
+                </a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <main class="contact-container">
+
+        <section class="contact-header">
+            <h1>Contact Us</h1>
+            <p>We're here to help with your reservations, bookings, and travel inquiries.</p>
+        </section>
+
+        <div class="contact-grid">
+
+            <!-- Contact Form -->
+            <div class="contact-form card">
+                <h2>Send Us a Message</h2>
+
+                <form>
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Your name" required>
+
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Your email" required>
+
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" placeholder="Message subject" required>
+
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Write your message here..." required></textarea>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info card">
+                <h2>Reach Us Directly</h2>
+
+                <div class="info-item">
+                    <span class="icon">📍</span>
+                    <p>Egypt Japan University for Science and Technology , Borg El-Arab, Egypt</p>
+                </div>
+
+                <div class="info-item">
+                    <span class="icon">📞</span>
+                    <p>+201064613656</p>
+                </div>
+
+                <div class="info-item">
+                    <span class="icon">✉️</span>
+                    <p>ejust@ejust.edu.eg</p>
+                </div>
+
+                <div class="info-item">
+                    <span class="icon">⏰</span>
+                    <p>Available 24/7</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Load user data (same as home)
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user?.name) {
+            document.getElementById('userName').textContent = user.name;
+
+            const initials = user.name
+                .split(' ')
+                .map(n => n[0])
+                .join('')
+                .toUpperCase();
+            document.querySelector('.avatar').textContent = initials;
+        }
+
+        // Logout
+        document.querySelector('.logout-btn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '../login/login.html';
+            }
+        });
+    </script>
+
+</body>
+</html>

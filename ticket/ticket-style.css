@@ -1,0 +1,712 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    color: white;
+}
+
+.header h1 {
+    font-size: 2rem;
+}
+
+.back-btn {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-5px);
+}
+
+/* ============================================
+   SUCCESS MESSAGE
+   ============================================ */
+.success-message {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.5s ease-out;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+    margin: 0 auto 20px;
+    animation: scaleIn 0.5s ease-out 0.2s both;
+}
+
+.success-message h2 {
+    color: #10b981;
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+.success-message p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   BOARDING PASS CONTAINER
+   ============================================ */
+.boarding-pass-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    animation: slideUp 0.6s ease-out 0.3s both;
+}
+
+.boarding-pass {
+    display: flex;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    width: 100%;
+}
+
+/* ============================================
+   LEFT SECTION (MAIN PASS)
+   ============================================ */
+.pass-left {
+    flex: 2;
+    padding: 30px;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    position: relative;
+}
+
+.pass-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.airline-logo {
+    font-size: 2.5rem;
+}
+
+.pass-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.passenger-info {
+    margin-bottom: 30px;
+}
+
+.info-row {
+    margin-bottom: 15px;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.passenger-name {
+    font-size: 1.5rem;
+}
+
+/* ============================================
+   FLIGHT ROUTE
+   ============================================ */
+.flight-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding: 20px 0;
+    border-top: 2px dashed rgba(255, 255, 255, 0.3);
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.route-from,
+.route-to {
+    text-align: center;
+}
+
+.airport-code {
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.airport-city {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    letter-spacing: 1px;
+}
+
+.route-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    max-width: 150px;
+}
+
+.plane-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    animation: fly 2s ease-in-out infinite;
+}
+
+.arrow-line {
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: relative;
+}
+
+.arrow-line::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: -6px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid white;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+}
+
+/* ============================================
+   FLIGHT DETAILS GRID
+   ============================================ */
+.flight-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.detail-item {
+    text-align: center;
+}
+
+.detail-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* ============================================
+   BOOKING REFERENCE
+   ============================================ */
+.booking-reference {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.reference-code {
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-top: 5px;
+}
+
+/* ============================================
+   BARCODE
+   ============================================ */
+.barcode {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+}
+
+.barcode-svg {
+    width: 100%;
+    max-width: 300px;
+    height: 60px;
+}
+
+/* ============================================
+   PERFORATION
+   ============================================ */
+.perforation {
+    width: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.circle {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    position: relative;
+}
+
+.circle.top::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: white;
+    border-radius: 0 0 15px 15px;
+}
+
+.circle.bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    height: 15px;
+    background: white;
+    border-radius: 15px 15px 0 0;
+}
+
+.dashed-line {
+    flex: 1;
+    width: 2px;
+    background: linear-gradient(white 50%, transparent 50%);
+    background-size: 2px 10px;
+}
+
+/* ============================================
+   RIGHT SECTION (STUB)
+   ============================================ */
+.pass-right {
+    flex: 1;
+    padding: 30px 20px;
+    background: white;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stub-header {
+    margin-bottom: 20px;
+}
+
+.stub-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #ef4444;
+}
+
+.stub-route {
+    margin-bottom: 20px;
+}
+
+.stub-airport {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.stub-code {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ef4444;
+}
+
+.stub-arrow {
+    font-size: 1.5rem;
+    color: #999;
+}
+
+.stub-cities {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.stub-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stub-item {
+    text-align: center;
+}
+
+.stub-label {
+    font-size: 0.7rem;
+    color: #999;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.stub-value {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.stub-barcode {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.stub-barcode-svg {
+    width: 100%;
+    max-width: 120px;
+    height: 40px;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-secondary {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.btn-primary:hover,
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary:hover {
+    background: #f8f9fa;
+}
+
+/* ============================================
+   INFO CARDS
+   ============================================ */
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.info-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.info-card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.info-card ul {
+    list-style: none;
+}
+
+.info-card li {
+    padding: 8px 0;
+    color: #666;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.info-card li::before {
+    content: '✓';
+    color: #10b981;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes fly {
+    0%, 100% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .boarding-pass-container {
+        margin: 0;
+        page-break-inside: avoid;
+    }
+
+    .boarding-pass {
+        box-shadow: none;
+        border: 2px solid #ddd;
+    }
+
+    .action-buttons,
+    .info-cards,
+    .success-message,
+    .header {
+        display: none;
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .boarding-pass {
+        flex-direction: column;
+    }
+
+    .perforation {
+        width: 100%;
+        height: 40px;
+        flex-direction: row;
+        padding: 0 20px;
+    }
+
+    .circle.top::before {
+        top: 0;
+        left: 15px;
+        bottom: 0;
+        width: 15px;
+        height: auto;
+        border-radius: 0 15px 15px 0;
+    }
+
+    .circle.bottom::after {
+        top: 0;
+        right: 15px;
+        bottom: 0;
+        left: auto;
+        width: 15px;
+        height: auto;
+        border-radius: 15px 0 0 15px;
+    }
+
+    .dashed-line {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(to right, white 50%, transparent 50%);
+        background-size: 10px 2px;
+    }
+
+    .airport-code {
+        font-size: 2rem;
+    }
+
+    .flight-details-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-success {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .info-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .success-message {
+        padding: 20px;
+    }
+
+    .success-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+
+    .success-message h2 {
+        font-size: 1.5rem;
+    }
+
+    .pass-left,
+    .pass-right {
+        padding: 20px;
+    }
+
+    .pass-title {
+        font-size: 1.2rem;
+    }
+
+    .airport-code {
+        font-size: 1.8rem;
+    }
+
+    .stub-code {
+        font-size: 1.5rem;
+    }
+}

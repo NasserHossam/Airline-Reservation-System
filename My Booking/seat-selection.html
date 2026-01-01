@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroBooker - Select Your Seat</title>
+    <link rel="stylesheet" href="seatselection-style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>✈️ Select Your Seat</h1>
+            <a href="../booking/booking.html" class="back-btn">← Back to Search</a>
+        </header>
+
+        <!-- Flight Info Card -->
+        <div class="flight-info-card">
+            <div class="flight-route">
+                <h2 id="flightNumber">Loading...</h2>
+                <div class="route-display">
+                    <span id="origin">---</span>
+                    <span class="arrow">→</span>
+                    <span id="destination">---</span>
+                </div>
+            </div>
+            <div class="flight-details">
+                <div class="detail-item">
+                    <span class="label">Date:</span>
+                    <span id="flightDate">---</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Departure:</span>
+                    <span id="departureTime">---</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Arrival:</span>
+                    <span id="arrivalTime">---</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Class:</span>
+                    <span id="ticketClass">---</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Price:</span>
+                    <span id="ticketPrice">$---</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Aircraft:</span>
+                    <span id="aircraftModel">---</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Seat Map -->
+            <div class="seat-map-container">
+                <h3>Choose Your Seat - <span id="selectedClassName">---</span></h3>
+                
+                <!-- Legend -->
+                <div class="seat-legend">
+                    <div class="legend-item">
+                        <div class="seat-icon available"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="seat-icon selected"></div>
+                        <span>Selected</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="seat-icon booked"></div>
+                        <span>Booked</span>
+                    </div>
+                </div>
+
+                <!-- Loading Message -->
+                <div id="loadingMessage" class="loading-message">
+                    <p>🔄 Loading seats...</p>
+                </div>
+
+                <!-- Airplane Layout -->
+                <div class="airplane" id="airplaneLayout" style="display: none;">
+                    <!-- Cockpit -->
+                    <div class="cockpit">
+                        <div class="cockpit-front"></div>
+                    </div>
+
+                    <!-- Seats will be dynamically loaded here -->
+                    <div id="seatsContainer"></div>
+
+                    <!-- Tail -->
+                    <div class="tail">
+                        <div class="tail-section"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Summary Sidebar -->
+            <div class="booking-summary">
+                <h3>Booking Summary</h3>
+                
+                <div class="summary-section">
+                    <h4>Flight Details</h4>
+                    <p><strong>Flight:</strong> <span id="summaryFlight">---</span></p>
+                    <p><strong>Route:</strong> <span id="summaryRoute">---</span></p>
+                    <p><strong>Date:</strong> <span id="summaryDate">---</span></p>
+                    <p><strong>Time:</strong> <span id="summaryTime">---</span></p>
+                    <p><strong>Aircraft:</strong> <span id="summaryAircraft">---</span></p>
+                </div>
+
+                <div class="summary-section">
+                    <h4>Selected Seat</h4>
+                    <div id="selectedSeatDisplay" class="selected-seat-display">
+                        <div class="seat-visual">
+                            <div class="seat-icon empty"></div>
+                        </div>
+                        <p class="no-seat-text">No seat selected</p>
+                    </div>
+                </div>
+
+                <div class="summary-section">
+                    <h4>Price Breakdown</h4>
+                    <div class="price-row">
+                        <span>Base Fare:</span>
+                        <span id="baseFare">$---</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Taxes & Fees:</span>
+                        <span id="taxes">$25.00</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total:</span>
+                        <span id="totalPrice">$---</span>
+                    </div>
+                </div>
+
+                <button id="confirmBtn" class="confirm-btn" disabled>
+                    Select a Seat First
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // GLOBAL VARIABLES
+        // ============================================
+        let selectedFlight = null;
+        let selectedSeat = null;
+        let allSeats = [];
+        const API_BASE_URL = 'http://localhost:3000/api';
+        const TAXES_AND_FEES = 25.00;
+
+        // ============================================
+        // LOAD FLIGHT DATA - FIXED TO USE LOCALSTORAGE
+        // ============================================
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 Seat selection page loaded');
+            console.log('🔍 Checking for flight data...');
+            
+            // Check localStorage (where booking page saves it)
+            const flightData = localStorage.getItem('selectedFlight');
+            
+            console.log('📦 Flight data from localStorage:', flightData ? 'EXISTS' : 'NULL');
+            
+            if (!flightData) {
+                console.error('❌ No flight selected');
+                alert('No flight selected. Redirecting to booking page...');
+                window.location.href = '../booking/booking.html';
+                return;
+            }
+
+            try {
+                selectedFlight = JSON.parse(flightData);
+                console.log('✅ Flight loaded successfully:', selectedFlight);
+                
+                // Verify flight has required data
+                if (!selectedFlight.flightId) {
+                    console.error('❌ Invalid flight data - missing flightId');
+                    alert('Invalid flight data. Please select a flight again.');
+                    window.location.href = '../booking/booking.html';
+                    return;
+                }
+                
+                displayFlightInfo();
+                loadSeats();
+            } catch (error) {
+                console.error('❌ Error parsing flight data:', error);
+                alert('Error loading flight data. Redirecting to booking page...');
+                window.location.href = '../booking/booking.html';
+            }
+        });
+
+        // ============================================
+        // DISPLAY FLIGHT INFORMATION
+        // ============================================
+        function displayFlightInfo() {
+            document.getElementById('flightNumber').textContent = selectedFlight.flightNumber;
+            document.getElementById('origin').textContent = `${selectedFlight.originCity} (${selectedFlight.originCode})`;
+            document.getElementById('destination').textContent = `${selectedFlight.destCity} (${selectedFlight.destCode})`;
+            
+            const flightDate = new Date(selectedFlight.flightDate);
+            const departureTime = new Date(selectedFlight.departureTime);
+            const arrivalTime = new Date(selectedFlight.arrivalTime);
+            
+            document.getElementById('flightDate').textContent = flightDate.toLocaleDateString('en-US', { 
+                weekday: 'short', 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+            document.getElementById('departureTime').textContent = departureTime.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('arrivalTime').textContent = arrivalTime.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            document.getElementById('ticketClass').textContent = selectedFlight.ticketType;
+            document.getElementById('ticketPrice').textContent = `${parseFloat(selectedFlight.fare).toFixed(2)}`;
+            document.getElementById('aircraftModel').textContent = selectedFlight.aircraftModel || 'Aircraft';
+            document.getElementById('selectedClassName').textContent = selectedFlight.ticketType;
+
+            document.getElementById('summaryFlight').textContent = selectedFlight.flightNumber;
+            document.getElementById('summaryRoute').textContent = `${selectedFlight.originCode} → ${selectedFlight.destCode}`;
+            document.getElementById('summaryDate').textContent = flightDate.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+            });
+            document.getElementById('summaryTime').textContent = departureTime.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('summaryAircraft').textContent = selectedFlight.aircraftModel || 'Aircraft';
+            
+            const baseFare = parseFloat(selectedFlight.fare);
+            document.getElementById('baseFare').textContent = `${baseFare.toFixed(2)}`;
+            document.getElementById('totalPrice').textContent = `${(baseFare + TAXES_AND_FEES).toFixed(2)}`;
+        }
+
+        // ============================================
+        // LOAD SEATS FROM DATABASE
+        // ============================================
+        async function loadSeats() {
+            try {
+                console.log('🔄 Loading seats from database...');
+                console.log('Flight ID:', selectedFlight.flightId);
+                
+                const response = await fetch(
+                    `${API_BASE_URL}/flights/${selectedFlight.flightId}/seats`
+                );
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Seats loaded from database:', data.seats?.length || 0);
+
+                allSeats = data.seats || [];
+                
+                // Filter seats by selected class
+                const filteredSeats = allSeats.filter(seat => 
+                    seat.Seat_Class === selectedFlight.ticketType
+                );
+
+                console.log(`🎫 Filtered ${filteredSeats.length} seats for ${selectedFlight.ticketType} class`);
+
+                if (filteredSeats.length === 0) {
+                    document.getElementById('loadingMessage').innerHTML = 
+                        '<p style="color: #ff6b6b;">❌ No seats available for selected class</p>';
+                    return;
+                }
+
+                displaySeats(filteredSeats);
+                
+                document.getElementById('loadingMessage').style.display = 'none';
+                document.getElementById('airplaneLayout').style.display = 'block';
+                
+            } catch (error) {
+                console.error('❌ Error loading seats:', error);
+                alert('Error loading seats from database. Please check console.');
+                document.getElementById('loadingMessage').innerHTML = 
+                    '<p style="color: red;">❌ Error loading seats. Please check console.</p>';
+            }
+        }
+
+        // ============================================
+        // DISPLAY SEATS
+        // ============================================
+        function displaySeats(seats) {
+            const container = document.getElementById('seatsContainer');
+            
+            // Group seats by row
+            const seatsByRow = {};
+            seats.forEach(seat => {
+                const row = seat.Seat_Number.replace(/[A-Z]/g, '');
+                if (!seatsByRow[row]) {
+                    seatsByRow[row] = [];
+                }
+                seatsByRow[row].push(seat);
+            });
+
+            // Sort rows numerically
+            const sortedRows = Object.keys(seatsByRow).sort((a, b) => parseInt(a) - parseInt(b));
+
+            // Determine aisle position based on number of seats per row
+            const firstRow = seatsByRow[sortedRows[0]];
+            const seatsPerRow = firstRow.length;
+            let aisleAfter = Math.floor(seatsPerRow / 2);
+
+            // Create section
+            const section = document.createElement('div');
+            section.className = 'class-section';
+            section.innerHTML = `
+                <div class="section-label">${selectedFlight.ticketType} Class</div>
+                <div class="seats-grid" id="seatsGrid"></div>
+            `;
+            
+            container.appendChild(section);
+            const seatsGrid = document.getElementById('seatsGrid');
+
+            // Display each row
+            sortedRows.forEach(row => {
+                const rowSeats = seatsByRow[row].sort((a, b) => 
+                    a.Seat_Number.localeCompare(b.Seat_Number)
+                );
+
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'seat-row';
+                
+                let rowHTML = `<div class="row-number">${row}</div><div class="seat-columns">`;
+
+                rowSeats.forEach((seat, index) => {
+                    const isBooked = seat.Is_Booked === 1;
+                    const statusClass = isBooked ? 'booked' : 'available';
+                    
+                    // Add aisle space
+                    if (index === aisleAfter) {
+                        rowHTML += '<div class="aisle"></div>';
+                    }
+                    
+                    const letter = seat.Seat_Number.match(/[A-Z]+/)[0];
+                    
+                    rowHTML += `
+                        <div class="seat ${statusClass}" 
+                             data-seat-id="${seat.SeatID}"
+                             data-seat-number="${seat.Seat_Number}"
+                             data-seat-class="${seat.Seat_Class}"
+                             ${isBooked ? 'data-booked="true"' : ''}>
+                            <div class="seat-label">${letter}</div>
+                        </div>
+                    `;
+                });
+
+                rowHTML += '</div>';
+                rowDiv.innerHTML = rowHTML;
+                seatsGrid.appendChild(rowDiv);
+            });
+
+            console.log(`✅ Displayed ${seats.length} seats in ${sortedRows.length} rows`);
+            
+            // Attach event listeners after seats are rendered
+            attachSeatEventListeners();
+        }
+
+        // ============================================
+        // ATTACH EVENT LISTENERS TO SEATS
+        // ============================================
+        function attachSeatEventListeners() {
+            const seatElements = document.querySelectorAll('.seat');
+            console.log(`🔘 Attaching listeners to ${seatElements.length} seats`);
+            
+            seatElements.forEach(seatElement => {
+                seatElement.addEventListener('click', function() {
+                    const seatId = this.getAttribute('data-seat-id');
+                    const seatNumber = this.getAttribute('data-seat-number');
+                    const seatClass = this.getAttribute('data-seat-class');
+                    const isBooked = this.hasAttribute('data-booked');
+                    
+                    selectSeat(seatId, seatNumber, seatClass, isBooked);
+                });
+            });
+        }
+
+        // ============================================
+        // SELECT A SEAT
+        // ============================================
+        function selectSeat(seatId, seatNumber, seatClass, isBooked) {
+            if (isBooked) {
+                console.log('❌ Seat is already booked');
+                return;
+            }
+
+            if (!seatId || seatId === 'null') {
+                console.log('❌ Invalid seat');
+                alert('This seat is not available.');
+                return;
+            }
+
+            console.log('🪑 Seat selected:', { seatId, seatNumber, seatClass });
+
+            // Remove previous selection
+            document.querySelectorAll('.seat.selected').forEach(seat => {
+                seat.classList.remove('selected');
+                seat.classList.add('available');
+            });
+
+            // Add selection to clicked seat
+            const seatElement = document.querySelector(`[data-seat-id="${seatId}"]`);
+            seatElement.classList.remove('available');
+            seatElement.classList.add('selected');
+
+            selectedSeat = { seatId, seatNumber, seatClass };
+            updateBookingSummary();
+        }
+
+        // ============================================
+        // UPDATE BOOKING SUMMARY
+        // ============================================
+        function updateBookingSummary() {
+            const display = document.getElementById('selectedSeatDisplay');
+            const confirmBtn = document.getElementById('confirmBtn');
+
+            if (selectedSeat) {
+                display.innerHTML = `
+                    <div class="seat-visual">
+                        <div class="seat-icon selected"></div>
+                    </div>
+                    <p><strong>Seat ${selectedSeat.seatNumber}</strong></p>
+                    <p class="seat-class">${selectedSeat.seatClass} Class</p>
+                `;
+
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = 'Continue to Passenger Details';
+            } else {
+                display.innerHTML = `
+                    <div class="seat-visual">
+                        <div class="seat-icon empty"></div>
+                    </div>
+                    <p class="no-seat-text">No seat selected</p>
+                `;
+
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = 'Select a Seat First';
+            }
+        }
+
+        // ============================================
+        // CONFIRM BOOKING - FIXED TO USE LOCALSTORAGE
+        // ============================================
+        document.getElementById('confirmBtn').addEventListener('click', () => {
+            if (!selectedSeat) {
+                alert('Please select a seat first');
+                return;
+            }
+
+            console.log('✅ Proceeding to passenger details...');
+
+            // Save to localStorage (consistent with other pages)
+            localStorage.setItem('selectedSeat', JSON.stringify(selectedSeat));
+
+            const bookingData = {
+                flight: selectedFlight,
+                seat: selectedSeat,
+                baseFare: parseFloat(selectedFlight.fare),
+                taxes: TAXES_AND_FEES,
+                total: parseFloat(selectedFlight.fare) + TAXES_AND_FEES
+            };
+            
+            localStorage.setItem('bookingData', JSON.stringify(bookingData));
+
+            console.log('💾 Booking data saved to localStorage');
+            console.log('🔀 Redirecting to passenger details...');
+
+            alert(`Seat ${selectedSeat.seatNumber} selected successfully!\n\nProceeding to passenger details...`);
+            
+            window.location.href = '../passenger/passanger.html';
+        });
+    </script>
+</body>
+</html>

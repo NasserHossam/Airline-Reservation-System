@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome To AeroBooker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="background">
+        <video autoplay muted loop playsinline>
+            <source src="media/background.mp4.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="container">
+        <div class="form-container" id="loginForm">
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Login to your account</p>
+            
+            <form>
+                <div class="input-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="remember-forgot">
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            
+            <div class="switch-form">
+                <p>Don't have an account? <a href="#" id="showSignup">Sign Up</a></p>
+            </div>
+        </div>
+
+        <div class="form-container hidden" id="signupForm">
+            <h1>Create Account</h1>
+            <p class="subtitle">Sign up to get started</p>
+            
+            <form>
+                <div class="input-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Create a password" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" placeholder="Confirm your password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+            </form>
+            
+            <div class="switch-form">
+                <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Clear any existing auth data on page load
+        console.log('🔄 Login page loaded - clearing old session data');
+        
+        // Switch between login and signup forms
+        const loginFormContainer = document.getElementById('loginForm');
+        const signupFormContainer = document.getElementById('signupForm');
+        const showSignup = document.getElementById('showSignup');
+        const showLogin = document.getElementById('showLogin');
+
+        showSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginFormContainer.classList.add('hidden');
+            signupFormContainer.classList.remove('hidden');
+        });
+
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupFormContainer.classList.add('hidden');
+            loginFormContainer.classList.remove('hidden');
+        });
+
+        // Login Form Submission
+        const loginForm = loginFormContainer.querySelector('form');
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const submitBtn = loginForm.querySelector('.btn-primary');
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Logging in...';
+            
+            try {
+                console.log('🔐 Attempting login for:', email);
+                
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log('✅ Login successful:', data);
+                    
+                    // Clear any old data first
+                    localStorage.clear();
+                    
+                    // Store user data AND token in localStorage
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('token', data.token);
+                    
+                    console.log('💾 Stored in localStorage:');
+                    console.log('   - user:', JSON.stringify(data.user));
+                    console.log('   - token:', data.token ? 'EXISTS' : 'NULL');
+                    
+                    // Verify storage worked
+                    const storedUser = localStorage.getItem('user');
+                    const storedToken = localStorage.getItem('token');
+                    console.log('✅ Verification - Data stored:', storedUser && storedToken ? 'YES' : 'NO');
+                    
+                    // Redirect to home page
+                    console.log('🔀 Redirecting to home page...');
+                    window.location.href = '../home/home.html';
+                } else {
+                    // Show error message
+                    console.error('❌ Login failed:', data.message);
+                    alert(data.message || 'Login failed. Please check your credentials.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Login';
+                }
+            } catch (error) {
+                console.error('❌ Login error:', error);
+                alert('Connection error. Please make sure your backend server is running.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Login';
+            }
+        });
+
+        // Signup Form Submission
+        const signupForm = signupFormContainer.querySelector('form');
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm').value;
+            const submitBtn = signupForm.querySelector('.btn-primary');
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating Account...';
+            
+            try {
+                console.log('📝 Attempting signup for:', email);
+                
+                const response = await fetch('http://localhost:3000/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    console.log('✅ Signup successful:', data);
+                    
+                    // Clear any old data first
+                    localStorage.clear();
+                    
+                    // Store user data AND token in localStorage
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('token', data.token);
+                    
+                    console.log('💾 Stored in localStorage:');
+                    console.log('   - user:', JSON.stringify(data.user));
+                    console.log('   - token:', data.token ? 'EXISTS' : 'NULL');
+                    
+                    // Verify storage worked
+                    const storedUser = localStorage.getItem('user');
+                    const storedToken = localStorage.getItem('token');
+                    console.log('✅ Verification - Data stored:', storedUser && storedToken ? 'YES' : 'NO');
+                    
+                    // Redirect to home page
+                    console.log('🔀 Redirecting to home page...');
+                    window.location.href = '../home/home.html';
+                } else {
+                    // Show error message
+                    console.error('❌ Signup failed:', data.message);
+                    alert(data.message || 'Signup failed. Please try again.');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Sign Up';
+                }
+            } catch (error) {
+                console.error('❌ Signup error:', error);
+                alert('Connection error. Please make sure your backend server is running.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Sign Up';
+            }
+        });
+    </script>
+</body>
+</html>
