@@ -1,0 +1,607 @@
+/* booking-styles.css - Matching Home Page Style */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    text-decoration: none;
+}
+
+.user-info:hover span {
+    text-decoration: underline;
+}
+
+.user-info span {
+    text-decoration: underline;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border: 2px solid white;
+}
+
+.logout-btn {
+    padding: 10px 24px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Main Content */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 30px;
+}
+
+/* Welcome Section */
+.welcome-section {
+    margin-bottom: 40px;
+}
+
+.welcome-section h1 {
+    font-size: 36px;
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+
+.welcome-section p {
+    font-size: 18px;
+    color: #718096;
+}
+
+/* Card Base Style */
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.card h2 {
+    font-size: 20px;
+    color: #2d3748;
+    margin-bottom: 24px;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #2d3748;
+    margin: 24px 0 16px;
+    font-weight: 600;
+}
+
+/* Search Card */
+.search-card {
+    background: white;
+}
+
+/* Error Message */
+.error {
+    background: #fee;
+    border: 1px solid #fcc;
+    color: #c33;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Form Styles */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon svg {
+    position: absolute;
+    left: 12px;
+    color: #a0aec0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input-with-icon input,
+.input-with-icon select {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+/* Special spacing for date input to separate text from calendar icon */
+input[type="date"] {
+    padding: 12px 45px 12px 12px; /* Extra right padding for calendar icon */
+    position: relative;
+}
+
+/* Show placeholder text when date is empty */
+input[type="date"]:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+
+input[type="date"]:focus::-webkit-datetime-edit {
+    color: #333 !important;
+}
+
+input[type="date"]::before {
+    content: attr(placeholder);
+    color: #a0aec0;
+    position: absolute;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+    content: none;
+}
+
+/* Style the date input to show placeholder-like text */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-left: 10px; /* Add space between date text and icon */
+    cursor: pointer;
+}
+
+/* For date inputs with icon wrapper */
+.input-with-icon input[type="date"] {
+    padding: 12px 45px 12px 40px; /* Left padding for icon, right padding for calendar */
+}
+
+.input-with-icon input:focus,
+.input-with-icon select:focus,
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+/* Action Button */
+.action-btn {
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.action-btn:hover {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.action-btn:hover svg {
+    stroke: white;
+}
+
+.action-btn svg {
+    stroke: #667eea;
+    transition: stroke 0.3s ease;
+}
+
+.action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.primary-btn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Search Results */
+.search-results {
+    margin-top: 30px;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.results-header h2 {
+    font-size: 24px;
+    color: #2d3748;
+}
+
+.results-count {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+/* Flights List */
+.flights-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Flight Card */
+.flight-card {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.flight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.flight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f7fafc;
+}
+
+.flight-header h3 {
+    font-size: 20px;
+    color: #2d3748;
+    margin: 0 0 8px 0;
+}
+
+.flight-route {
+    font-size: 14px;
+    color: #718096;
+    margin: 0;
+}
+
+.flight-price {
+    text-align: right;
+}
+
+.price {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: #667eea;
+    line-height: 1;
+}
+
+.class {
+    display: block;
+    font-size: 13px;
+    color: #718096;
+    margin-top: 4px;
+}
+
+/* Flight Details */
+.flight-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: #f7fafc;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #4a5568;
+}
+
+.detail-item svg {
+    flex-shrink: 0;
+    stroke: #667eea;
+}
+
+/* Select Flight Button */
+.select-flight-btn {
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #718096;
+    font-size: 16px;
+}
+
+.no-flights {
+    text-align: center;
+    padding: 40px;
+    color: #718096;
+    font-size: 16px;
+}
+
+/* Selected Flight Info */
+.selected-flight-info {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8ecff 100%);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+.selected-flight h4 {
+    font-size: 18px;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+.selected-flight p {
+    font-size: 14px;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Seat Selection */
+.seat-selection {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.seat {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.seat.available {
+    background: #48bb78;
+    color: white;
+}
+
+.seat.available:hover {
+    background: #38a169;
+    transform: scale(1.05);
+}
+
+.seat.booked {
+    background: #cbd5e0;
+    color: #718096;
+    cursor: not-allowed;
+}
+
+.seat.selected {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+/* Booking Form Section */
+.booking-form-section {
+    margin-top: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 20px;
+    }
+    
+    .nav-menu {
+        display: none;
+    }
+    
+    .main-content {
+        padding: 30px 20px;
+    }
+    
+    .welcome-section h1 {
+        font-size: 28px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .flight-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .flight-price {
+        text-align: left;
+    }
+    
+    .flight-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .seat-selection {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .user-info span {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .welcome-section h1 {
+        font-size: 24px;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+    
+    .seat-selection {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    
+    .price {
+        font-size: 24px;
+    }
+}

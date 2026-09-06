@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - AeroBooker</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span> ✈️ AeroBooker <span class="admin-tag">Admin</span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../home/home.html">Home</a></li>
+                <li><a href="../Profile/user.html">My Profile</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="#" class="user-info">
+                    <div class="avatar" id="navAvatar">A</div>
+                    <span id="navUserName">Admin</span>
+                </a>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="admin-container">
+            <h1>Admin Dashboard</h1>
+            <p class="admin-subtitle">Manage flights, review bookings, and oversee user accounts.</p>
+
+            <!-- Quick Stats -->
+            <div class="stats-row" id="statsRow">
+                <div class="stat-card">
+                    <p class="stat-label">Total Flights</p>
+                    <p class="stat-number" id="statTotalFlights">-</p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Active Bookings</p>
+                    <p class="stat-number" id="statActiveBookings">-</p>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="flights">Flights</button>
+                <button class="tab-btn" data-tab="bookings">Bookings</button>
+                <button class="tab-btn" data-tab="users">Users</button>
+            </div>
+
+            <!-- Flights Tab -->
+            <section id="tab-flights" class="tab-panel active">
+                <div class="panel-header">
+                    <h2>Flights</h2>
+                    <button class="btn btn-primary" id="addFlightBtn">+ Add Flight</button>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Flight #</th>
+                                <th>Route</th>
+                                <th>Date</th>
+                                <th>Departure</th>
+                                <th>Aircraft</th>
+                                <th>Status</th>
+                                <th>Seats</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="flightsTableBody">
+                            <tr><td colspan="8" class="empty-row">Loading flights...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Bookings Tab -->
+            <section id="tab-bookings" class="tab-panel">
+                <div class="panel-header">
+                    <h2>All Bookings</h2>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Passenger</th>
+                                <th>Flight</th>
+                                <th>Date</th>
+                                <th>Seat</th>
+                                <th>Class</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTableBody">
+                            <tr><td colspan="9" class="empty-row">Loading bookings...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Users Tab -->
+            <section id="tab-users" class="tab-panel">
+                <div class="panel-header">
+                    <h2>Users</h2>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Last Login</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr><td colspan="6" class="empty-row">Loading users...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Add / Edit Flight Modal -->
+    <div class="modal-overlay" id="flightModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="flightModalTitle">Add Flight</h3>
+                <button class="modal-close" id="flightModalClose">&times;</button>
+            </div>
+            <form id="flightForm">
+                <input type="hidden" id="flightId">
+                <div class="form-row">
+                    <label>Flight Number</label>
+                    <input type="text" id="flightNumber" placeholder="e.g. MS500" required>
+                </div>
+                <div class="form-row">
+                    <label>Route</label>
+                    <select id="routeId" required></select>
+                </div>
+                <div class="form-row">
+                    <label>Aircraft</label>
+                    <select id="aircraftId" required></select>
+                </div>
+                <div class="form-row two-col">
+                    <div>
+                        <label>Flight Date</label>
+                        <input type="date" id="flightDate" required>
+                    </div>
+                    <div>
+                        <label>Gate Number</label>
+                        <input type="text" id="gateNumber" placeholder="Optional">
+                    </div>
+                </div>
+                <div class="form-row two-col">
+                    <div>
+                        <label>Departure Time</label>
+                        <input type="datetime-local" id="departureTime" required>
+                    </div>
+                    <div>
+                        <label>Arrival Time</label>
+                        <input type="datetime-local" id="arrivalTime" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label>Status</label>
+                    <select id="flightStatusId" required></select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="flightModalCancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="flightModalSubmit">Save Flight</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../shared/config.js"></script>
+    <script>
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authToken = localStorage.getItem('token');
+
+        // Guard: only logged-in Admins may view this page.
+        if (!user || !user.id || !authToken) {
+            window.location.href = '../login/login.html';
+        } else if (user.role !== 'Admin') {
+            alert('Admin access required.');
+            window.location.href = '../home/home.html';
+        }
+
+        document.getElementById('navUserName').textContent = user.name;
+        document.getElementById('navAvatar').textContent = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+
+        function authHeaders(extra = {}) {
+            return { 'Authorization': `Bearer ${authToken}`, ...extra };
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+                window.location.href = '../login/login.html';
+            }
+        });
+
+        // ==================== TABS ====================
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+            });
+        });
+
+        // ==================== LOOKUPS (for the flight form dropdowns) ====================
+        let lookups = { routes: [], aircraft: [], statuses: [] };
+
+        async function loadLookups() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/lookups`, { headers: authHeaders() });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message);
+                lookups = data;
+
+                const routeSelect = document.getElementById('routeId');
+                routeSelect.innerHTML = lookups.routes.map(r =>
+                    `<option value="${r.RouteID}">${r.Origin} → ${r.Destination}</option>`
+                ).join('');
+
+                const aircraftSelect = document.getElementById('aircraftId');
+                aircraftSelect.innerHTML = lookups.aircraft.map(a =>
+                    `<option value="${a.AircraftID}">${a.Model} (${a.Registration_Number}) · ${a.Total_Seats} seats</option>`
+                ).join('');
+
+                const statusSelect = document.getElementById('flightStatusId');
+                statusSelect.innerHTML = lookups.statuses.map(s =>
+                    `<option value="${s.FlightStatusID}">${s.Status_Name}</option>`
+                ).join('');
+            } catch (error) {
+                console.error('Error loading lookups:', error);
+            }
+        }
+
+        // ==================== STATS ====================
+        async function loadStats() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/dashboard/stats`, { headers: authHeaders() });
+                const data = await res.json();
+                if (res.ok) {
+                    document.getElementById('statTotalFlights').textContent = data.totalFlights;
+                    document.getElementById('statActiveBookings').textContent = data.activeBookings;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // ==================== FLIGHTS ====================
+        async function loadFlights() {
+            const tbody = document.getElementById('flightsTableBody');
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/flights`, { headers: authHeaders() });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message);
+
+                if (data.flights.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="8" class="empty-row">No flights yet. Add one to get started.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.flights.map(f => {
+                    const dep = new Date(f.Departure_Time);
+                    const depStr = dep.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', month: 'short', day: 'numeric' });
+                    const flightDate = new Date(f.Flight_Date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    return `
+                        <tr>
+                            <td><strong>${f.Flight_Number}</strong></td>
+                            <td>${f.Origin} → ${f.Destination}</td>
+                            <td>${flightDate}</td>
+                            <td>${depStr}</td>
+                            <td>${f.Aircraft_Model}</td>
+                            <td><span class="status-pill status-${f.Flight_Status.toLowerCase()}">${f.Flight_Status}</span></td>
+                            <td>${f.Booked_Seats} / ${f.Total_Seats_Tracked}</td>
+                            <td class="actions-cell">
+                                <button class="icon-btn" title="Edit" onclick="openEditFlight(${f.FlightID})">✏️</button>
+                                <button class="icon-btn danger" title="Delete" onclick="deleteFlight(${f.FlightID})">🗑️</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+
+                // cache raw flight data on the table for edit lookups
+                tbody.dataset.flights = JSON.stringify(data.flights);
+            } catch (error) {
+                console.error('Error loading flights:', error);
+                tbody.innerHTML = '<tr><td colspan="8" class="empty-row">Could not load flights.</td></tr>';
+            }
+        }
+
+        function toLocalInputValue(isoString) {
+            // Converts a DB datetime into the value format <input type="datetime-local"> expects
+            const d = new Date(isoString);
+            const pad = n => String(n).padStart(2, '0');
+            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        }
+
+        function toDateInputValue(isoString) {
+            const d = new Date(isoString);
+            const pad = n => String(n).padStart(2, '0');
+            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        }
+
+        // ==================== FLIGHT MODAL ====================
+        const flightModalOverlay = document.getElementById('flightModalOverlay');
+        const flightForm = document.getElementById('flightForm');
+
+        function openAddFlight() {
+            flightForm.reset();
+            document.getElementById('flightId').value = '';
+            document.getElementById('flightModalTitle').textContent = 'Add Flight';
+            document.getElementById('flightModalSubmit').textContent = 'Save Flight';
+            flightModalOverlay.classList.add('open');
+        }
+
+        function openEditFlight(flightId) {
+            const flights = JSON.parse(document.getElementById('flightsTableBody').dataset.flights || '[]');
+            const flight = flights.find(f => f.FlightID === flightId);
+            if (!flight) return;
+
+            document.getElementById('flightId').value = flight.FlightID;
+            document.getElementById('flightNumber').value = flight.Flight_Number;
+            document.getElementById('routeId').value = flight.RouteID;
+            document.getElementById('aircraftId').value = flight.AircraftID;
+            document.getElementById('flightDate').value = toDateInputValue(flight.Flight_Date);
+            document.getElementById('gateNumber').value = flight.Gate_Number || '';
+            document.getElementById('departureTime').value = toLocalInputValue(flight.Departure_Time);
+            document.getElementById('arrivalTime').value = toLocalInputValue(flight.Arrival_Time);
+            document.getElementById('flightStatusId').value = flight.FlightStatusID;
+
+            document.getElementById('flightModalTitle').textContent = `Edit Flight — ${flight.Flight_Number}`;
+            document.getElementById('flightModalSubmit').textContent = 'Update Flight';
+            flightModalOverlay.classList.add('open');
+        }
+
+        function closeFlightModal() {
+            flightModalOverlay.classList.remove('open');
+        }
+
+        document.getElementById('addFlightBtn').addEventListener('click', openAddFlight);
+        document.getElementById('flightModalClose').addEventListener('click', closeFlightModal);
+        document.getElementById('flightModalCancel').addEventListener('click', closeFlightModal);
+        flightModalOverlay.addEventListener('click', (e) => {
+            if (e.target === flightModalOverlay) closeFlightModal();
+        });
+
+        flightForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('flightModalSubmit');
+            submitBtn.disabled = true;
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+
+            const flightId = document.getElementById('flightId').value;
+            const payload = {
+                flightNumber: document.getElementById('flightNumber').value.trim(),
+                routeId: document.getElementById('routeId').value,
+                aircraftId: document.getElementById('aircraftId').value,
+                flightDate: document.getElementById('flightDate').value,
+                gateNumber: document.getElementById('gateNumber').value.trim(),
+                departureTime: document.getElementById('departureTime').value,
+                arrivalTime: document.getElementById('arrivalTime').value,
+                flightStatusId: document.getElementById('flightStatusId').value
+            };
+
+            const isEdit = !!flightId;
+            const url = isEdit ? `${API_BASE_URL}/admin/flights/${flightId}` : `${API_BASE_URL}/admin/flights`;
+            const method = isEdit ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method,
+                    headers: authHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    closeFlightModal();
+                    loadFlights();
+                    loadStats();
+                } else {
+                    alert(data.message || 'Failed to save flight');
+                }
+            } catch (error) {
+                console.error('Error saving flight:', error);
+                alert('Connection error. Please make sure your backend server is running.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        async function deleteFlight(flightId) {
+            if (!confirm('Delete this flight? This cannot be undone.')) return;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/flights/${flightId}`, {
+                    method: 'DELETE',
+                    headers: authHeaders()
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    loadFlights();
+                    loadStats();
+                } else {
+                    alert(data.message || 'Failed to delete flight');
+                }
+            } catch (error) {
+                console.error('Error deleting flight:', error);
+                alert('Connection error. Please make sure your backend server is running.');
+            }
+        }
+
+        // ==================== BOOKINGS ====================
+        async function loadBookings() {
+            const tbody = document.getElementById('bookingsTableBody');
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/bookings`, { headers: authHeaders() });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message);
+
+                if (data.bookings.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="9" class="empty-row">No bookings yet.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.bookings.map(b => {
+                    const bookingDate = new Date(b.Booking_Date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    const statusClass = (b.Booking_Status || '').toLowerCase();
+                    return `
+                        <tr>
+                            <td>#${b.BookingID}</td>
+                            <td>${b.Fname} ${b.Lname}<br><span class="muted">${b.Email}</span></td>
+                            <td>${b.Flight_Number}</td>
+                            <td>${bookingDate}</td>
+                            <td>${b.Seat_Number || '—'}</td>
+                            <td>${b.Type_Name}</td>
+                            <td>$${Number(b.Total_Amount).toFixed(2)}</td>
+                            <td><span class="status-pill status-${statusClass}">${b.Booking_Status}</span></td>
+                            <td>${b.Payment_Status || '—'}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                tbody.innerHTML = '<tr><td colspan="9" class="empty-row">Could not load bookings.</td></tr>';
+            }
+        }
+
+        // ==================== USERS ====================
+        async function loadUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/users`, { headers: authHeaders() });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message);
+
+                tbody.innerHTML = data.users.map(u => {
+                    const joined = new Date(u.CreatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    const lastLogin = u.Last_Login ? new Date(u.Last_Login).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Never';
+                    return `
+                        <tr>
+                            <td>${u.Fname} ${u.Lname}</td>
+                            <td>${u.Email}</td>
+                            <td>${u.Phone || '—'}</td>
+                            <td><span class="status-pill ${u.Role === 'Admin' ? 'status-admin' : 'status-scheduled'}">${u.Role}</span></td>
+                            <td>${lastLogin}</td>
+                            <td>${joined}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error loading users:', error);
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-row">Could not load users.</td></tr>';
+            }
+        }
+
+        // ==================== INIT ====================
+        loadStats();
+        loadLookups();
+        loadFlights();
+        loadBookings();
+        loadUsers();
+    </script>
+</body>
+</html>
