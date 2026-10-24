@@ -981,7 +981,10 @@ app.post('/api/bookings/create', authenticateToken, (req, res) => {
                                                 console.log('🎉 Booking completed successfully:', bookingDetails[0]);
 
                                                 // Fire-and-forget: email sending never blocks or fails the booking response.
-                                                sendBookingConfirmationEmail(bookingDetails[0]);
+                                                sendBookingConfirmationEmail({
+                                                    ...bookingDetails[0],
+                                                    Email: req.user.email || bookingDetails[0].Email
+                                                });
 
                                                 res.status(201).json({
                                                     message: 'Booking created successfully',
